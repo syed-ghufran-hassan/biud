@@ -28,3 +28,8 @@ body {
   50% { transform: translateY(-10px) rotate(0deg); }
   75% { transform: translateY(-5px) rotate(2deg); }
 }
+
+@keyframes tail-wag {
+  0%, 100% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+}
