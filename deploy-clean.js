@@ -1,11 +1,31 @@
-// Deploy BiUD contracts to Stacks mainnet
-// Using clean ASCII-only contract files
-const fs = require('fs');
-const https = require('https');
-const { makeContractDeploy, AnchorMode } = require('@stacks/transactions');
+/**
+ * BiUD Clean Deployment Script
+ * Deploy BiUD contracts to Stacks mainnet
+ * Using clean ASCII-only contract files
+ * 
+ * SECURITY: Private key must be provided via environment variable
+ * Usage: DEPLOYER_PRIVATE_KEY=your_key node deploy-clean.js
+ */
 
-// Private key derived from mnemonic (compressed with 01 suffix)
-const PRIVATE_KEY = "75d9505011762184b07cca11cf33c8190bf060b736d297b4390d404b63d8ec8901";
+require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
+const {
+  makeContractDeploy,
+  AnchorMode,
+  getAddressFromPrivateKey,
+  TransactionVersion,
+} = require('@stacks/transactions');
+
+// SECURITY: Load private key from environment variable
+const PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY;
+if (!PRIVATE_KEY) {
+  console.error('❌ ERROR: DEPLOYER_PRIVATE_KEY environment variable is required');
+  console.error('Usage: DEPLOYER_PRIVATE_KEY=your_key node deploy-clean.js');
+  console.error('Or create a .env file with DEPLOYER_PRIVATE_KEY=your_key');
+  process.exit(1);
+}
 
 // Use string network name
 const network = 'mainnet';
@@ -94,19 +114,22 @@ async function deployContract(contractName, codeBody, nonce) {
 
 async function main() {
   try {
-    const address = 'SP31G2FZ5JN87BATZMP4ZRYE5F7WZQDNEXJ7G7X97';
+    // Get deployer address from private key
+    const address = getAddressFromPrivateKey(PRIVATE_KEY, TransactionVersion.Mainnet);
+    console.log(`Deployer address: ${address}`);
     
     // Get current nonce
     const nonce = await getNonce(address);
     console.log(`Current nonce: ${nonce}`);
 
-    // Read clean contract files
-    const usernameCode = fs.readFileSync('/home/thee1/ebookMP/biud/contracts/biud-username-v2.clar', 'utf8');
-    const resolverCode = fs.readFileSync('/home/thee1/ebookMP/biud/contracts/biud-resolver-v2.clar', 'utf8');
+    // Read clean contract files using relative paths
+    const contractsDir = path.join(__dirname, 'contracts');
+    const usernameCode = fs.readFileSync(path.join(contractsDir, 'biud-username-v2.clar'), 'utf8');
+    const resolverCode = fs.readFileSync(path.join(contractsDir, 'biud-resolver-v2.clar'), 'utf8');
 
     // Deploy biud-username-v3 first (v2 code with explicit clarity version)
     const result1 = await deployContract('biud-username-v3', usernameCode, nonce);
-    
+
     if (result1.status === 200 || (result1.json && !result1.json.error)) {
       console.log('\nbiud-username-v3 deployment submitted!');
       console.log('TX ID:', result1.json || result1.raw);
