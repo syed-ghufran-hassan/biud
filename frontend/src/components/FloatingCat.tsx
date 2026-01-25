@@ -15,6 +15,10 @@ export default function FloatingCat() {
         <div className="absolute top-14 left-2 w-6 h-[1px] bg-cat-whisker -rotate-12"></div>
         <div className="absolute top-15 left-2 w-6 h-[1px] bg-cat-whisker"></div>
         <div className="absolute top-16 left-2 w-6 h-[1px] bg-cat-whisker rotate-12"></div>
+        {/* Whiskers right */}
+        <div className="absolute top-14 right-2 w-6 h-[1px] bg-cat-whisker rotate-12"></div>
+        <div className="absolute top-15 right-2 w-6 h-[1px] bg-cat-whisker"></div>
+        <div className="absolute top-16 right-2 w-6 h-[1px] bg-cat-whisker -rotate-12"></div>
       </div>
     </div>
   );
