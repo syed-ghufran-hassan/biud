@@ -43,3 +43,8 @@ body {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.02); }
 }
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-tail-wag { animation: tail-wag 0.5s ease-in-out infinite; }
+.animate-blink { animation: blink 4s ease-in-out infinite; }
+.animate-purr { animation: purr 2s ease-in-out infinite; }
