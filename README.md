@@ -338,3 +338,18 @@ This version features a complete UI redesign with:
 - Cat accent: #FF8C42 (orange)
 - Bark: #5D4E37
 - Grain: #C4A574
+
+## 🐱 New Theme: Animated Floating Cat + Wooden Design
+
+This version features a complete UI redesign with:
+- **Animated Floating Cat** mascot throughout the site
+- **Wooden color palette** inspired by natural wood tones
+- **Cat paw decorations** in the footer
+- **Wood grain textures** and patterns
+- **Smooth animations** for an engaging user experience
+
+### Theme Colors
+- Wood tones: #fdf8f3 to #3a1e13
+- Cat accent: #FF8C42 (orange)
+- Bark: #5D4E37
+- Grain: #C4A574
