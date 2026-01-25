@@ -35,6 +35,13 @@ module.exports = {
           DEFAULT: '#C4A574',
           dark: '#A68B5B',
         },
+        cat: {
+          orange: '#FF8C42',
+          cream: '#FFF8DC',
+          whisker: '#2C2C2C',
+          nose: '#FFB6C1',
+          eye: '#90EE90',
+        },
       },
     },
   },
