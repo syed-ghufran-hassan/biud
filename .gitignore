@@ -23,10 +23,32 @@ tmp/
 .DS_Store
 Thumbs.db
 
-# Environment
+# Environment - SENSITIVE
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
+.env.test
+
+# Wallet/Key files - EXTREMELY SENSITIVE
+*.key
+*.pem
+*.p12
+*.pfx
+wallets/
+*.wallet.json
+*-wallets.json
+wallet-*.json
+mnemonic.txt
+seed.txt
+private-key.txt
+secret.txt
+secrets/
+
+# Deployment results (may contain sensitive tx data)
+deployment-results.json
+deploy-results*.json
 
 # Logs
 *.log
@@ -40,3 +62,13 @@ coverage/
 
 # TypeScript
 *.tsbuildinfo
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Deployment scripts (may contain sensitive configurations)
+deploy-mainnet.js
+deploy-mainnet-v2.js
+deploy-clean.js
