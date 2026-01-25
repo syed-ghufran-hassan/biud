@@ -48,3 +48,9 @@ body {
 .animate-tail-wag { animation: tail-wag 0.5s ease-in-out infinite; }
 .animate-blink { animation: blink 4s ease-in-out infinite; }
 .animate-purr { animation: purr 2s ease-in-out infinite; }
+
+/* Scrollbar wooden theme */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #f2d9bf; }
+::-webkit-scrollbar-thumb { background: #a35831; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #83472c; }
