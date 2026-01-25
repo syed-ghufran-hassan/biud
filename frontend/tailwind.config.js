@@ -46,6 +46,7 @@ module.exports = {
       animation: {
         'float': 'float 3s ease-in-out infinite',
         'bounce-slow': 'bounce-slow 2s ease-in-out infinite',
+        'tail-wag': 'tail-wag 0.5s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -55,6 +56,10 @@ module.exports = {
         'bounce-slow': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-5px)' },
+        },
+        'tail-wag': {
+          '0%, 100%': { transform: 'rotate(-10deg)' },
+          '50%': { transform: 'rotate(10deg)' },
         },
       },
     },
