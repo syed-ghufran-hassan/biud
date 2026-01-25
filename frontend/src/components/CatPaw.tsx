@@ -1,12 +1,9 @@
 'use client';
 
-export default function CatPaw({ className = '', delay = 0 }: { className?: string; delay?: number }) {
+export default function CatPaw({ className = '' }: { className?: string }) {
   return (
-    <div 
-      className={`relative animate-float ${className}`}
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <span className="text-2xl opacity-30">🐾</span>
+    <div className={`relative ${className}`}>
+      <span className="text-2xl">🐾</span>
     </div>
   );
 }
