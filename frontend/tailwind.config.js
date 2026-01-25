@@ -25,6 +25,16 @@ module.exports = {
           900: '#6b3c27',
           950: '#3a1e13',
         },
+        bark: {
+          light: '#8B7355',
+          DEFAULT: '#5D4E37',
+          dark: '#3D3222',
+        },
+        grain: {
+          light: '#DEB887',
+          DEFAULT: '#C4A574',
+          dark: '#A68B5B',
+        },
       },
     },
   },
