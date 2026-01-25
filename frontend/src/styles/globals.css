@@ -7,3 +7,8 @@
   --wood-dark: #83472c;
   --grain: #C4A574;
 }
+
+body {
+  background: linear-gradient(135deg, #fdf8f3 0%, #f2d9bf 100%);
+  min-height: 100vh;
+}
