@@ -45,11 +45,16 @@ module.exports = {
       },
       animation: {
         'float': 'float 3s ease-in-out infinite',
+        'bounce-slow': 'bounce-slow 2s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        'bounce-slow': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5px)' },
         },
       },
     },
