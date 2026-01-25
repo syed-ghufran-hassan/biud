@@ -63,3 +63,12 @@ export default function Home() {
           </h2>
         </div>
       </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-4 bg-wood-100 dark:bg-wood-900">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-wood-800 dark:text-wood-100 mb-12">
+            Why BiUD?
+          </h2>
+        </div>
+      </section>
