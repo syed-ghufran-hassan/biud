@@ -10,6 +10,7 @@ export default function FloatingCat() {
           <div className="absolute top-1 left-1 w-2 h-2 bg-cat-eye rounded-full"></div>
         </div>
         <div className="absolute top-14 left-1/2 -translate-x-1/2 w-3 h-2 bg-cat-nose rounded-full"></div>
+        <div className="absolute top-16 left-1/2 -translate-x-1/2 w-1 h-2 bg-cat-whisker rounded-t-full"></div>
       </div>
     </div>
   );
