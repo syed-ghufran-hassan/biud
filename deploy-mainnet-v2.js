@@ -1,17 +1,31 @@
 /**
  * BiUD Mainnet Deployment Script v2
  * Deploys the BiUD username contract to Stacks mainnet
+ * 
+ * SECURITY: Private key must be provided via environment variable
+ * Usage: DEPLOYER_PRIVATE_KEY=your_key node deploy-mainnet-v2.js
  */
 
+require('dotenv').config();
 const fs = require('fs');
 const https = require('https');
 const {
   makeContractDeploy,
   AnchorMode,
   PostConditionMode,
+  getAddressFromPrivateKey,
+  TransactionVersion,
 } = require('@stacks/transactions');
 
-const PRIVATE_KEY = '75d9505011762184b07cca11cf33c8190bf060b736d297b4390d404b63d8ec8901';
+// SECURITY: Load private key from environment variable
+const PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY;
+if (!PRIVATE_KEY) {
+  console.error('❌ ERROR: DEPLOYER_PRIVATE_KEY environment variable is required');
+  console.error('Usage: DEPLOYER_PRIVATE_KEY=your_key node deploy-mainnet-v2.js');
+  console.error('Or create a .env file with DEPLOYER_PRIVATE_KEY=your_key');
+  process.exit(1);
+}
+
 const API_URL = 'api.mainnet.hiro.so';
 
 function broadcastTx(txHex) {
@@ -91,17 +105,20 @@ async function deployContract(contractPath, contractName, nonce) {
 
 async function main() {
   console.log('='.repeat(60));
-  console.log('BiUD Mainnet Deployment');
+  console.log('BiUD Mainnet Deployment v2');
   console.log('='.repeat(60));
+  
+  // Get deployer address from private key
+  const deployerAddress = getAddressFromPrivateKey(PRIVATE_KEY, TransactionVersion.Mainnet);
   
   // Get current nonce
   const nonceResponse = await fetch(
-    `https://${API_URL}/extended/v1/address/SP31G2FZ5JN87BATZMP4ZRYE5F7WZQDNEXJ7G7X97/nonces`
+    `https://${API_URL}/extended/v1/address/${deployerAddress}/nonces`
   );
   const nonceData = await nonceResponse.json();
   let nonce = nonceData.possible_next_nonce;
   
-  console.log(`\nDeployer: SP31G2FZ5JN87BATZMP4ZRYE5F7WZQDNEXJ7G7X97`);
+  console.log(`\nDeployer: ${deployerAddress}`);
   console.log(`Starting nonce: ${nonce}`);
   
   // Deploy biud-username

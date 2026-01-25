@@ -8,6 +8,9 @@
     "check": "clarinet check",
     "console": "clarinet console"
   },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
   "devDependencies": {
     "@hirosystems/clarinet-sdk": "^2.3.0",
     "@stacks/network": "^7.2.0",
