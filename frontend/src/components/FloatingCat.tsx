@@ -9,6 +9,7 @@ export default function FloatingCat() {
         <div className="absolute top-8 right-6 w-4 h-4 bg-white rounded-full">
           <div className="absolute top-1 left-1 w-2 h-2 bg-cat-eye rounded-full"></div>
         </div>
+        <div className="absolute top-14 left-1/2 -translate-x-1/2 w-3 h-2 bg-cat-nose rounded-full"></div>
       </div>
     </div>
   );
