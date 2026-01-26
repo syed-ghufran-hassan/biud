@@ -80,3 +80,6 @@ coverage/
 deploy-mainnet.js
 deploy-mainnet-v2.js
 deploy-clean.js
+
+# Scripts folder (internal tools)
+scripts/
