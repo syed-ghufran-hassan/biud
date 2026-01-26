@@ -1,17 +1,22 @@
+/**
+ * BiUD Frontend - Feature Card Component
+ * Gold & Black Metallic Theme
+ */
+
 'use client';
 
 interface FeatureCardProps {
-  emoji: string;
+  icon: string;
   title: string;
   description: string;
 }
 
-export default function FeatureCard({ emoji, title, description }: FeatureCardProps) {
+export default function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <div className="p-6 bg-wood-50 dark:bg-wood-800 rounded-xl border border-wood-200 dark:border-wood-700 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-      <div className="text-4xl mb-4 animate-bounce-slow">{emoji}</div>
-      <h3 className="text-xl font-semibold mb-2 text-wood-800 dark:text-wood-100">{title}</h3>
-      <p className="text-wood-600 dark:text-wood-300">{description}</p>
+    <div className="metallic-card rounded-xl p-6 transition-all duration-300 hover:scale-[1.02] gold-glow-hover group">
+      <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{icon}</div>
+      <h3 className="text-xl font-bold metallic-text-static mb-3">{title}</h3>
+      <p className="text-metal-400 leading-relaxed">{description}</p>
     </div>
   );
 }

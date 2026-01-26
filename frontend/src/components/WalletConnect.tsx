@@ -1,7 +1,6 @@
 /**
  * BiUD Frontend - Wallet Connection Component
- * Uses @stacks/connect for wallet integration
- * Supports both desktop (Leather) and mobile (Xverse) wallets
+ * Gold & Black Metallic Theme
  */
 
 'use client';
@@ -12,13 +11,11 @@ import { getPrimaryName } from '../services/biud';
 
 const appConfig = new AppConfig(['store_write', 'publish_data']);
 
-// Create userSession only on client side
 let userSession: UserSession | null = null;
 if (typeof window !== 'undefined') {
   userSession = new UserSession({ appConfig });
 }
 
-// Detect if user is on mobile device
 const isMobileDevice = (): boolean => {
   if (typeof window === 'undefined') return false;
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -37,14 +34,10 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is signed in on mount (client-side only)
     checkSession();
-    
-    // Also check for pending sign-in (handles redirect flow on mobile)
     handlePendingSignIn();
   }, []);
 
-  // Fetch primary name when address changes
   useEffect(() => {
     if (address) {
       fetchPrimaryName(address);
@@ -71,9 +64,7 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
     if (typeof window === 'undefined' || !userSession) return;
     
     try {
-      // Check if there's a pending sign-in from redirect
       if (userSession.isSignInPending()) {
-        console.log('Pending sign-in detected, handling...');
         const userData = await userSession.handlePendingSignIn();
         if (userData) {
           const userAddress = userData?.profile?.stxAddress?.mainnet;
@@ -89,7 +80,6 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
   };
 
   const clearSession = () => {
-    // Clear any stored session data
     if (typeof window !== 'undefined') {
       try {
         localStorage.removeItem('blockstack-session');
@@ -98,9 +88,7 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
             localStorage.removeItem(key);
           }
         });
-      } catch (e) {
-        // Ignore localStorage errors
-      }
+      } catch (e) {}
     }
     setAddress(null);
   };
@@ -112,7 +100,6 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
     }
 
     try {
-      // First check if there's actually session data before calling isUserSignedIn
       const sessionData = localStorage.getItem('blockstack-session');
       if (!sessionData) {
         setIsLoading(false);
@@ -128,8 +115,6 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
         }
       }
     } catch (e) {
-      // Session data corrupted, clear it
-      console.log('Session check failed, clearing session:', e);
       clearSession();
     }
     setIsLoading(false);
@@ -144,11 +129,7 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
         icon: typeof window !== 'undefined' ? `${window.location.origin}/logo.png` : '/logo.png',
       },
       onFinish: (payload) => {
-        // payload contains the authentication response directly
-        console.log('Wallet connection payload:', payload);
-        
         try {
-          // Try to get address from payload first (more reliable on mobile)
           const addressFromPayload = payload?.userSession?.loadUserData()?.profile?.stxAddress?.mainnet;
           
           if (addressFromPayload) {
@@ -157,7 +138,6 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
             return;
           }
           
-          // Fallback: check userSession directly
           if (userSession?.isUserSignedIn()) {
             const userData = userSession.loadUserData();
             const userAddress = userData?.profile?.stxAddress?.mainnet;
@@ -168,26 +148,20 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
           }
         } catch (e) {
           console.error('Connection finish error:', e);
-          // Last resort: try to reload session after a small delay
           setTimeout(() => {
             checkSession();
           }, 500);
         }
       },
-      onCancel: () => {
-        console.log('User cancelled wallet connection');
-      },
+      onCancel: () => {},
       userSession,
     });
   };
 
   const handleDisconnect = () => {
-    // Sign out from user session
     try {
       userSession?.signUserOut();
-    } catch (e) {
-      // Ignore signout errors
-    }
+    } catch (e) {}
     
     clearSession();
     setPrimaryName(null);
@@ -196,10 +170,7 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
 
   if (isLoading) {
     return (
-      <button
-        disabled
-        className="bg-gray-600 text-white px-4 py-2 rounded-lg opacity-50"
-      >
+      <button disabled className="px-4 py-2 bg-metal-700 text-metal-400 rounded-lg opacity-50">
         Loading...
       </button>
     );
@@ -210,17 +181,17 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
       <div className="flex items-center gap-3">
         <div className="flex flex-col items-end">
           {primaryName ? (
-            <span className="text-sm font-semibold text-bitcoin">
+            <span className="text-sm font-semibold metallic-text-static">
               {primaryName}
             </span>
           ) : null}
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+          <span className="text-xs text-metal-400">
             {address.slice(0, 6)}...{address.slice(-4)}
           </span>
         </div>
         <button
           onClick={handleDisconnect}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+          className="px-4 py-2 bg-metal-800 hover:bg-metal-700 text-metal-300 hover:text-white rounded-lg transition-all border border-metal-600/50 hover:border-gold-500/30"
         >
           Disconnect
         </button>
@@ -232,12 +203,12 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
     <div className="flex flex-col items-center gap-2">
       <button
         onClick={handleConnect}
-        className="bg-stacks hover:bg-stacks/90 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+        className="metallic-button px-6 py-2.5 rounded-lg font-semibold"
       >
         Connect Wallet
       </button>
       {isMobileDevice() && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 text-center max-w-[200px]">
+        <p className="text-xs text-metal-500 text-center max-w-[200px]">
           Use Xverse mobile app for best experience
         </p>
       )}
@@ -245,5 +216,4 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
   );
 }
 
-// Export userSession for use in other components
 export { userSession };

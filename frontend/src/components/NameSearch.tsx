@@ -1,6 +1,7 @@
 /**
  * BiUD Frontend - Name Search Component
  * Search and check availability of .sBTC names
+ * Gold & Black Metallic Theme
  */
 
 'use client';
@@ -22,7 +23,6 @@ export default function NameSearch({ onNameSelected }: NameSearchProps) {
   } | null>(null);
 
   const handleSearch = async () => {
-    // Validate label
     const validation = validateLabel(label.toLowerCase());
     if (!validation.valid) {
       setResult({ available: false, fee: 0, error: validation.error });
@@ -55,7 +55,7 @@ export default function NameSearch({ onNameSelected }: NameSearchProps) {
   return (
     <div className="w-full max-w-xl mx-auto">
       {/* Search Input */}
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <div className="flex-1 relative">
           <input
             type="text"
@@ -63,51 +63,64 @@ export default function NameSearch({ onNameSelected }: NameSearchProps) {
             onChange={(e) => setLabel(e.target.value.toLowerCase())}
             onKeyPress={handleKeyPress}
             placeholder="Search for a name..."
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-stacks focus:border-transparent outline-none text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-colors"
+            className="w-full px-5 py-4 metallic-input rounded-xl text-lg placeholder-metal-500 pr-20"
             maxLength={32}
           />
-          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 font-medium">
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gold-500/70 font-medium">
             .sBTC
           </span>
         </div>
         <button
           onClick={handleSearch}
           disabled={isChecking || !label}
-          className="px-6 py-3 bg-bitcoin hover:bg-bitcoin/90 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-8 py-4 metallic-button rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
-          {isChecking ? 'Checking...' : 'Search'}
+          {isChecking ? (
+            <span className="flex items-center gap-2">
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              Checking
+            </span>
+          ) : (
+            'Search'
+          )}
         </button>
       </div>
 
       {/* Result Display */}
       {result && (
-        <div className={`mt-4 p-4 rounded-lg transition-colors ${
+        <div className={`mt-6 p-5 rounded-xl transition-all ${
           result.error 
-            ? 'bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800' 
+            ? 'bg-red-900/20 border border-red-500/30'
             : result.available 
-              ? 'bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800' 
-              : 'bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800'
+              ? 'metallic-card gold-glow'
+              : 'bg-metal-800/50 border border-metal-600/30'
         }`}>
           {result.error ? (
-            <p className="text-red-700 dark:text-red-400">{result.error}</p>
+            <p className="text-red-400">{result.error}</p>
           ) : (
             <>
-              <p className="font-semibold text-lg text-gray-900 dark:text-white">
+              <p className="font-bold text-xl metallic-text-static mb-3">
                 {getFullName(label)}
               </p>
               {result.available ? (
-                <div className="mt-2">
-                  <span className="inline-block px-2 py-1 bg-green-500 text-white text-sm rounded">
-                    Available
+                <div className="space-y-3">
+                  <span className="inline-block px-3 py-1.5 bg-green-500/20 text-green-400 text-sm rounded-lg border border-green-500/30 font-medium">
+                    ✓ Available
                   </span>
-                  <p className="mt-2 text-gray-600 dark:text-gray-300">
-                    Registration fee: <strong>{formatSTX(result.fee)} STX</strong>
+                  <p className="text-metal-300">
+                    Registration fee: <strong className="text-gold-400">{formatSTX(result.fee)} STX</strong>
                   </p>
+                  <button className="w-full mt-2 py-3 metallic-button rounded-lg font-semibold">
+                    Register Now
+                  </button>
                 </div>
               ) : (
-                <div className="mt-2">
-                  <span className="inline-block px-2 py-1 bg-yellow-500 text-white text-sm rounded">
-                    Taken
+                <div>
+                  <span className="inline-block px-3 py-1.5 bg-metal-700/50 text-metal-400 text-sm rounded-lg border border-metal-600/30 font-medium">
+                    ✗ Taken
                   </span>
                 </div>
               )}

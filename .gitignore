@@ -34,6 +34,11 @@ Thumbs.db
 # Migration data (contains state, not for version control)
 migration-data.json
 
+# Test wallet data - EXTREMELY SENSITIVE
+test-wallets.json
+funding-results.json
+mint-results.json
+
 # Wallet/Key files - EXTREMELY SENSITIVE
 *.key
 *.pem
