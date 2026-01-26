@@ -31,6 +31,9 @@ Thumbs.db
 .env.production
 .env.test
 
+# Migration data (contains state, not for version control)
+migration-data.json
+
 # Wallet/Key files - EXTREMELY SENSITIVE
 *.key
 *.pem
