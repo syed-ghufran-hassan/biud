@@ -40,9 +40,9 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-metal-800 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-metal-500 text-sm">
-            © 2026 BiUD. Built on Bitcoin.
-          </p>
+            <p className="text-metal-500 text-sm">
+             © {new Date().getFullYear()} BiUD. Built on Bitcoin.
+           </p>
           <div className="flex items-center gap-2">
             <span className="text-metal-600 text-sm">Powered by</span>
             <span className="metallic-text-static font-semibold">Stacks</span>
