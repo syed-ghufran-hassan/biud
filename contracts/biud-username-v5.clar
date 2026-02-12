@@ -43,6 +43,7 @@
 ;; Contract deployer (initial admin - can be transferred)
 (define-constant CONTRACT_DEPLOYER tx-sender)
 
+
 ;; Error codes
 (define-constant ERR_NAME_TAKEN (err u1001))
 (define-constant ERR_NAME_EXPIRED (err u1002))
@@ -65,6 +66,7 @@
 (define-constant ERR_MIGRATION_DISABLED (err u1019))
 (define-constant ERR_NO_PENDING_ADMIN (err u1020))
 (define-constant ERR_NOT_PENDING_ADMIN (err u1021))
+(define-constant ERR_UNAUTHORIZED u1022))
 
 ;; =============================================================================
 ;; DATA VARIABLES
@@ -108,6 +110,9 @@
 
 ;; Temporary variable for filter operation
 (define-data-var temp-name-id uint u0)
+
+;; Defining access comtrol for ownership transfer
+(define-data-var contract-owner principal tx-sender)
 
 ;; =============================================================================
 ;; DATA MAPS
@@ -338,6 +343,13 @@
   (is-some (map-get? primary-names { owner: owner }))
 )
 
+(define-private (require-owner)
+  (asserts!
+    (is-eq tx-sender (var-get contract-owner))
+    (err ERR-UNAUTHORIZED)
+  )
+)
+
 ;; =============================================================================
 ;; ADMIN TRANSFER FUNCTIONS (NEW IN V5)
 ;; =============================================================================
@@ -511,6 +523,14 @@
       block-height: block-height
     })
     
+    (ok true)
+  )
+)
+
+(define-public (transfer-ownership (new-owner principal))
+  (begin
+    (require-owner)
+    (var-set contract-owner new-owner)
     (ok true)
   )
 )
