@@ -460,6 +460,27 @@ describe("Resolver Management", () => {
     );
     expect(result.result).toBeErr(Cl.uint(1003)); // ERR_NOT_OWNER
   });
+it("owner can transfer ownership", () => {
+  const call = simnet.callPublicFn(
+    "biud-username-v5",
+    "transfer-ownership",
+    [Cl.principal(accounts.get("wallet_2")!.address)],
+    accounts.get("wallet_1")!
+  );
+  expect(call.result).toBeOk();
+});
+it("non-owner cannot transfer ownership", () => {
+  const call = simnet.callPublicFn(
+    "biud-username-v5",
+    "transfer-ownership",
+    [Cl.principal(accounts.get("wallet_3")!.address)],
+    accounts.get("wallet_2")!
+  );
+  expect(call.result).toBeErr(Cl.uint(401)); // unauthorized
+});
+  
+
+  
 });
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -921,3 +942,4 @@ describe("Integration Scenarios", () => {
     ).toBeUint(3);
   });
 });
+
